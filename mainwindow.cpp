@@ -19,9 +19,9 @@
  */
 #include <QDebug>
 #include <QAudio>
-#include <QMessageBox>
+#include <QtWidgets/QMessageBox>
 #include <QTextStream>
-#include <QFileDialog>
+#include <QtWidgets/QFileDialog>
 #include <QDir>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -113,8 +113,10 @@ void MainWindow::createDeviceSelector()
 /*! \brief Initialise audio related data. */
 void MainWindow::initialiseAudio()
 {
-    audioFormat.setFrequency(22050);
-    audioFormat.setChannels(1);
+    //audioFormat.setFrequency(22050);
+    audioFormat.setSampleRate(22050);
+    //audioFormat.setChannels(1);
+    audioFormat.setChannelCount(1);
     audioFormat.setSampleSize(16);
     audioFormat.setSampleType(QAudioFormat::SignedInt);
     audioFormat.setByteOrder(QAudioFormat::LittleEndian);
@@ -163,7 +165,6 @@ void MainWindow::on_actionDecode_toggled(bool enabled)
             audioFormat = info.nearestFormat(audioFormat);
         }
 
-#if 0
         qDebug() << "----------------------------------------------------";
         qDebug() << "Input device: " << inputDevices.at(inputSelector->currentIndex()).deviceName();
         qDebug() << "      Codecs: " << inputDevices.at(inputSelector->currentIndex()).supportedCodecs();
@@ -173,9 +174,6 @@ void MainWindow::on_actionDecode_toggled(bool enabled)
         qDebug() << "Sample sizes: " << inputDevices.at(inputSelector->currentIndex()).supportedSampleSizes();
         qDebug() << " Byte orders: " << inputDevices.at(inputSelector->currentIndex()).supportedByteOrders();
         qDebug() << "----------------------------------------------------";
-#endif
-
-#if 0
         qDebug() << "----------------------------------------------------";
         qDebug() << "      Codec: " << audioFormat.codec();
         qDebug() << " Byte order: " << audioFormat.byteOrder();
@@ -184,7 +182,6 @@ void MainWindow::on_actionDecode_toggled(bool enabled)
         qDebug() << "Sample type: " << audioFormat.sampleType();
         qDebug() << "   Channels: " << audioFormat.channelCount();
         qDebug() << "----------------------------------------------------";
-#endif
 
         /* initialise decoder; looks weird but dmeods were organised in array in multimon */
         afsk12->reset();

@@ -44,7 +44,7 @@
 #define SSI_H
 
 #include <QPixmap>
-#include <QWidget>
+#include <QtWidgets/QWidget>
 #include <QObject>
 #include <QLinearGradient>
 
